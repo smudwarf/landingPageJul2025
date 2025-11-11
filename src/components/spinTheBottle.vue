@@ -56,11 +56,9 @@
     <div
       v-if="showMessage"
       ref="messageBox"
-      class="fixed inset-0 z-50 flex items-center justify-center "
+      class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0"
     >
-   <div
-        class="w-full h-full flex items-center justify-center px-8"
-      >
+      <div class="w-full h-full flex items-center justify-center px-8">
         <div class="text-center">
           <p class="text-8xl font-bold text-white drop-shadow-2xl">
             {{ message }}
