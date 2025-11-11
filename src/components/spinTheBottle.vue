@@ -1,11 +1,9 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <!-- Wrapper til flaske og punkter -->
-    <div class="relative">
-      <!-- Container til 8 prikker i en cirkel -->
-      <div
-        class="absolute inset-0 w-96 h-96 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-      >
+  <div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div
+      class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl aspect-square"
+    >
+      <div class="absolute inset-0 w-full h-full">
         <!---------------------------->
         <!--........Prikker........ -->
         <!---------------------------->
@@ -14,14 +12,14 @@
           :key="i"
           :style="{
             // Drej hver prik (360/8 = 45)
-            // Flyt den 180px væk fra midten
-            transform: `rotate(${i * 45}deg) translateY(-180px)`,
+            // Flyt den ud fra midten (den bliver flyttet tættere på flasken)
+            transform: `rotate(${i * 45}deg) translateY(min(-10vw, -120px))`,
             position: 'absolute',
             left: '50%',
             top: '50%',
             transformOrigin: 'center',
           }"
-          class="w-4 h-4 bg-gray-600 rounded-full -translate-x-1/2 -translate-y-1/2"
+          class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 bg-gray-600 rounded-full -translate-x-1/2 -translate-y-1/2"
         >
           <!-- Spiller nummer over prikkerne
           <span
@@ -39,7 +37,7 @@
       <div
         ref="box"
         id="spinBottle"
-        class="relative z-10 w-32 h-32 cursor-grab active:cursor-grabbing flex items-center justify-center"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 cursor-grab active:cursor-grabbing flex items-center justify-center"
       >
         <!---------------------------->
         <!--..........Img...... -->
@@ -56,18 +54,22 @@
     <div
       v-if="showMessage"
       ref="messageBox"
-      class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0"
+      class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0 p-4"
     >
-      <div class="w-full h-full flex items-center justify-center px-8">
-        <div class="text-center">
-          <p class="text-8xl font-bold text-white drop-shadow-2xl">
+      <div
+        class="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-8"
+      >
+        <div class="text-center max-w-4xl">
+          <p
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
+          >
             {{ message }}
           </p>
           <button
             @click="closeMessage"
-            class="mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-2xl py-6 px-12 rounded-lg transition-colors shadow-xl"
+            class="mt-6 sm:mt-8 md:mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-lg transition-colors shadow-xl"
           >
-            OK
+            Igen
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import SpinTheBottle from "../components/spinTheBottle.vue";
+import IntroScreen from "../components/IntroScreen.vue";
 ---
 
 <html lang="en">
@@ -9,7 +10,8 @@ import SpinTheBottle from "../components/spinTheBottle.vue";
     <meta name="viewport" content="width=device-width" />
     <title>Landing Page</title>
   </head>
-  <body>
+  <body class="overflow-hidden h-screen">
+    <IntroScreen client:load />
     <SpinTheBottle client:load />
   </body>
 </html>
