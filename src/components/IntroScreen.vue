@@ -1,44 +1,3 @@
-<template>
-  <div></div>
-
-  <!-- gradient retning: bund til højre  -->
-  <div
-    ref="introScreen"
-    class="fixed inset-0 z-20 flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gradient-to-br from-gray-700 to-gray-900 opacity-0"
-  >
-    <div class="text-center max-w-4xl mx-auto">
-      <h1
-        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
-      >
-        Glædelig Jul!
-      </h1>
-      <button
-        @click="start"
-        class="mt-4 sm:mt-6 md:mt-8 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-3 px-6 sm:py-4 sm:px-8 md:py-5 md:px-10 rounded-lg transition-colors shadow-xl"
-      >
-        pil
-      </button>
-
-      <!---picture intro screen -->
-      <div
-        ref="box"
-        id="spinBottle"
-        class="absolute bottom-10 sm:bottom-16 md:bottom-20 lg:bottom-24 left-1/2 -translate-x-1/2 z-10 w-20 h-20 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 xl:w-48 xl:h-48 cursor-grab active:cursor-grabbing flex items-center justify-center"
-        @mouseenter="onBottleHover"
-        @mouseleave="onBottleLeave"
-        @click="onBottleClick"
-      >
-        <img
-          src="/images/spin-bottle.png"
-          alt="Spin the Bottle"
-          class="w-full h-full object-contain"
-          @error="console.log('Bottle image failed to load')"
-        />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from "vue";
 import { gsap } from "gsap";
@@ -84,15 +43,31 @@ function onBottleLeave() {
   }
 }
 
-function onBottleClick() {
+//function onBottleClick() {
   if (box.value) {
     // Animate bottle to center of screen
     gsap.to(box.value, {
       bottom: "50%",
       y: "50%",
-      scale: .6,
+      scale: 0.6,
       duration: 0.8,
       ease: "power2.out",
+    });
+  }
+//}
+
+function moveBottleUp() {
+  if (box.value) {
+    // Move bottle upwards and then start the game
+    gsap.to(box.value, {
+      bottom: "50%",
+      y: "50%",
+      scale: 0.8,
+      duration: 1.0,
+      ease: "power2.out",
+      onComplete: () => {
+        start();
+      },
     });
   }
 }
@@ -111,3 +86,56 @@ function start() {
   }
 }
 </script>
+
+
+<template>
+  <div></div>
+
+  <!-- gradient retning: bund til højre  -->
+  <div
+    ref="introScreen"
+    class="fixed inset-0 z-20 flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gradient-to-br from-gray-700 to-gray-900 opacity-0"
+  >
+    <div class="text-center max-w-4xl mx-auto">
+      <h1
+        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
+      >
+        Glædelig Jul!
+      </h1>
+      <p class="text-white pl-5 pr-5">
+        Julen nærmer sig, og vi vil gerne benytte lejligheden til at sige tusind
+        tak for et godt samarbejde i året, der er gået. Vi sætter stor pris på
+        den tillid og støtte, I har vist os, og vi glæder os til at fortsætte
+        samarbejdet i det nye år.
+      </p>
+      
+      <!---picture intro screen -->
+      <button
+        @click="moveBottleUp"
+        class="mt-4 sm:mt-6 md:mt-8 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-3 px-6 sm:py-4 sm:px-8 md:py-5 md:px-10 rounded-lg transition-colors flex items-center justify-center mx-auto"
+      >
+        <img
+          src="/images/arrow-narrow-up.svg"
+          alt="Arrow Up"
+          class=" mt-10 w-10 h-10 sm:w-10 sm:h-10 md:w-20 md:h-20"
+        />
+      </button>
+      <div
+        ref="box"
+        id="spinBottle"
+        class="absolute bottom-[-120px] sm:bottom-[-60px] md:bottom-[-80px] lg:bottom-[-100px] xl:bottom-[-120px] left-1/2 -translate-x-1/2 z-10 w-80 h-80 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 cursor-grab active:cursor-grabbing flex items-center justify-center"
+        @mouseenter="onBottleHover"
+        @mouseleave="onBottleLeave"
+        @click="onBottleClick"
+      >
+        <img
+          src="/images/spin-bottle.png"
+          alt="Spin the Bottle"
+          class="w-full h-full object-contain"
+          @error="console.log('Bottle image failed to load')"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
