@@ -8,15 +8,19 @@ gsap.registerPlugin(Draggable, InertiaPlugin);
 
 const box = ref<HTMLElement | null>(null);
 const messageBox = ref<HTMLElement | null>(null);
-const message = ref<string>("");
+
+const message = ref<string | { type: string; src: string; alt: string }>("");
 const showMessage = ref(false);
 
-const messages: Record<number, string> = {
-  1: { type: "svg", src: "/images/fredagsbar.svg", alt: "Special Prize!" },
-  2: { type: "svg", src: "/images/fredagsbar.svg", alt: "Special Prize!" },
-  3: { type: "svg", src: "/images/fredagsbar.svg", alt: "Special Prize!" },
-  4: { type: "svg", src: "/images/fredagsbar.svg", alt: "Special Prize!" },
-  5: { type: "svg", src: "/images/circle.svg", alt: "Special Prize!" },
+// Define a union type for your messages
+type MessageContent = string | { type: "svg"; src: string; alt: string };
+
+const messages: Record<number, MessageContent> = {
+  1: { type: "svg", src: "/images/fredagsbar.svg", alt: "spin 1" },
+  2: { type: "svg", src: "/images/fredagsbar.svg", alt: "spin 2" },
+  3: { type: "svg", src: "/images/fredagsbar.svg", alt: "spin 3" },
+  4: { type: "svg", src: "/images/fredagsbar.svg", alt: "spin 4" },
+  5: { type: "svg", src: "/images/circle.svg", alt: "spin 5" },
   6: "Du har vundet 6!",
   7: "Du har vundet 7!",
   8: "Du har vundet 8!",
@@ -82,11 +86,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+  <div class="min-h-screen flex items-center justify-center p-4">
     <div
       class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl aspect-square"
     >
       <div class="absolute inset-0 w-full h-full">
+
         <!---------------------------->
         <!--........Prikker........ -->
         <!---------------------------->
@@ -103,10 +108,11 @@ onMounted(() => {
           class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 bg-gray-600 rounded-full -translate-x-1/2 -translate-y-1/2"
         ></div>
       </div>
+
+
       <!---------------------------->
       <!-- Circle SVG Background -->
       <!---------------------------->
-
       <div
         class="absolute inset-0 w-full h-full flex items-center justify-center"
       >
@@ -117,6 +123,7 @@ onMounted(() => {
           @error="console.log('Circle SVG failed to load')"
         />
       </div>
+
       <!---------------------------->
       <!-- spin flaske container -->
       <!---------------------------->
@@ -133,8 +140,10 @@ onMounted(() => {
         />
       </div>
     </div>
-
+    <!------------------------------------------------->
     <!-- Fullscreen besked box med fade in animation -->
+    <!------------------------------------------------->
+
     <div
       v-if="showMessage"
       ref="messageBox"

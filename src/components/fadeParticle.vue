@@ -76,12 +76,12 @@ export default {
           rotation: Math.random() * 360,
           duration: Math.random() * 4 + 3, // Slower fall for better visibility
           repeat: -1,
-          delay: Math.random() * 3, // Stagger the start times more
+          delay: Math.random() * 2, // Stagger the start times more
           ease: "none",
           onRepeat: () => {
             // Reset to new random position at top when repeating
             gsap.set(particle, {
-              x: Math.random() * (window.innerWidth + 200) - 100,
+              x: Math.random() * (window.innerWidth + 300) - 100,
               y: -100,
             });
           },
@@ -105,7 +105,7 @@ export default {
   >
     <!-- Snow Particles -->
     <div
-      v-for="i in 50"
+      v-for="i in 60"
       :key="i"
       class="particle absolute pointer-events-none opacity-0"
     >
@@ -116,7 +116,7 @@ export default {
 
     <!-- Additional larger snowflakes -->
     <div
-      v-for="i in 20"
+      v-for="i in 60"
       :key="`large-${i}`"
       class="particle absolute pointer-events-none opacity-0"
     >
