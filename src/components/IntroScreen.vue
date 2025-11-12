@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from "vue";
 import { gsap } from "gsap";
+import FadeParticle from "./fadeParticle.vue";
 
 const emit = defineEmits<{
   (e: "start-game"): void;
@@ -12,11 +13,12 @@ const box = ref<HTMLElement | null>(null);
 onMounted(async () => {
   await nextTick();
 
-  // Fade in intro screen
+  // Fade in intro screen AFTER particles and logo (delay by 2.5 seconds)
   if (introScreen.value) {
     gsap.to(introScreen.value, {
       opacity: 1,
-      duration: 0.5,
+      duration: 1.0,
+      delay: 2.5, // Wait for particles and logo to finish their animation
       ease: "power2.out",
     });
   }
@@ -43,7 +45,7 @@ function onBottleLeave() {
   }
 }
 
-//function onBottleClick() {
+function onBottleClick() {
   if (box.value) {
     // Animate bottle to center of screen
     gsap.to(box.value, {
@@ -54,7 +56,7 @@ function onBottleLeave() {
       ease: "power2.out",
     });
   }
-//}
+}
 
 function moveBottleUp() {
   if (box.value) {
@@ -87,9 +89,9 @@ function start() {
 }
 </script>
 
-
 <template>
-  <div></div>
+  <!-- FadeParticle component with particles and logo -->
+  <FadeParticle />
 
   <!-- gradient retning: bund til højre  -->
   <div
@@ -108,7 +110,7 @@ function start() {
         den tillid og støtte, I har vist os, og vi glæder os til at fortsætte
         samarbejdet i det nye år.
       </p>
-      
+
       <!---picture intro screen -->
       <button
         @click="moveBottleUp"
@@ -117,7 +119,7 @@ function start() {
         <img
           src="/images/arrow-narrow-up.svg"
           alt="Arrow Up"
-          class=" mt-10 w-10 h-10 sm:w-10 sm:h-10 md:w-20 md:h-20"
+          class="mt-10 w-10 h-10 sm:w-10 sm:h-10 md:w-20 md:h-20"
         />
       </button>
       <div
@@ -138,4 +140,3 @@ function start() {
     </div>
   </div>
 </template>
-
