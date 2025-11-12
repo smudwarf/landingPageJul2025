@@ -16,8 +16,8 @@ export default {
       // Set particles initial state (invisible)
       particles.forEach((particle) => {
         gsap.set(particle, {
-          y: -100,
-          x: Math.random() * window.innerWidth,
+          y: -700,
+          x: Math.random() * (window.innerWidth + 200) - 100, // Add extra width and offset
           opacity: 0,
         });
       });
@@ -54,7 +54,7 @@ export default {
             duration: 1.5,
             ease: "back.out(1.7)",
           },
-          "-=1.0"
+          "-=3.0"
         ); // Start 1 second before intro screen finishes
       }
 
@@ -74,10 +74,17 @@ export default {
         gsap.to(particle, {
           y: window.innerHeight + 100,
           rotation: Math.random() * 360,
-          duration: Math.random() * 3 + 2,
+          duration: Math.random() * 4 + 3, // Slower fall for better visibility
           repeat: -1,
-          delay: 1.5 + Math.random() * 2, // Start falling after fade-in
+          delay: Math.random() * 3, // Stagger the start times more
           ease: "none",
+          onRepeat: () => {
+            // Reset to new random position at top when repeating
+            gsap.set(particle, {
+              x: Math.random() * (window.innerWidth + 200) - 100,
+              y: -100,
+            });
+          },
         });
       });
     });
