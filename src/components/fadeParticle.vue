@@ -17,7 +17,7 @@ export default {
       particles.forEach((particle) => {
         gsap.set(particle, {
           y: -700,
-          x: Math.random() * (window.innerWidth + 200) - 100, // Add extra width and offset
+          x: Math.random() * (window.innerWidth + 1600) - 800, // bredde + offset
           opacity: 0,
         });
       });
