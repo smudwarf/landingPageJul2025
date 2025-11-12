@@ -54,7 +54,7 @@ export default {
             duration: 1.5,
             ease: "back.out(1.7)",
           },
-          "-=3.0"
+          "-=4.0"
         ); // Start 1 second before intro screen finishes
       }
 
@@ -64,7 +64,7 @@ export default {
           particle,
           {
             opacity: Math.random() * 0.8 + 0.2,
-            duration: 0.8,
+            duration: 1.0,
             ease: "power2.out",
           },
           `-=${1.2 - index * 0.02}`
@@ -79,7 +79,6 @@ export default {
           delay: Math.random() * 2, // Stagger the start times more
           ease: "none",
           onRepeat: () => {
-            // Reset to new random position at top when repeating
             gsap.set(particle, {
               x: Math.random() * (window.innerWidth + 300) - 100,
               y: -100,

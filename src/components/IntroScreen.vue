@@ -23,11 +23,12 @@ onMounted(async () => {
     });
   }
 });
+
 function onBottleHover() {
   if (box.value) {
     gsap.to(box.value, {
       y: -10,
-      scale: 1.05,
+      scale: 1.08,
       duration: 0.3,
       ease: "power2.out",
     });
@@ -45,19 +46,7 @@ function onBottleLeave() {
   }
 }
 
-function onBottleClick() {
-  if (box.value) {
-    // Animate bottle to center of screen
-    gsap.to(box.value, {
-      bottom: "50%",
-      y: "50%",
-      scale: 0.6,
-      duration: 0.8,
-      ease: "power2.out",
-    });
-  }
-}
-
+// Simplified bottle click - same as moveBottleUp
 function moveBottleUp() {
   if (box.value) {
     // Move bottle upwards and then start the game
@@ -125,10 +114,10 @@ function start() {
       <div
         ref="box"
         id="spinBottle"
-        class="absolute bottom-[-120px] sm:bottom-[-60px] md:bottom-[-80px] lg:bottom-[-100px] xl:bottom-[-120px] left-1/2 -translate-x-1/2 z-10 w-80 h-80 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 cursor-grab active:cursor-grabbing flex items-center justify-center"
+        class="absolute bottom-[-120px] sm:bottom-[-60px] md:bottom-[-80px] lg:bottom-[-100px] xl:bottom-[-120px] left-1/2 -translate-x-1/2 z-10 w-80 h-80 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 cursor-pointer flex items-center justify-center"
         @mouseenter="onBottleHover"
         @mouseleave="onBottleLeave"
-        @click="onBottleClick"
+        @click="moveBottleUp"
       >
         <img
           src="/images/spin-bottle.png"

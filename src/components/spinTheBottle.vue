@@ -91,7 +91,6 @@ onMounted(() => {
       class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl aspect-square"
     >
       <div class="absolute inset-0 w-full h-full">
-
         <!---------------------------->
         <!--........Prikker........ -->
         <!---------------------------->
@@ -108,7 +107,6 @@ onMounted(() => {
           class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 bg-gray-600 rounded-full -translate-x-1/2 -translate-y-1/2"
         ></div>
       </div>
-
 
       <!---------------------------->
       <!-- Circle SVG Background -->
@@ -138,41 +136,63 @@ onMounted(() => {
           class="w-full h-full object-contain"
           @error="console.log('Bottle image failed to load')"
         />
+
       </div>
     </div>
-    <!------------------------------------------------->
-    <!-- Fullscreen besked box med fade in animation -->
-    <!------------------------------------------------->
-
+    
+    <!-- Bottom text - moved outside and positioned absolutely -->
     <div
-      v-if="showMessage"
-      ref="messageBox"
-      class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0 p-4"
+ class="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-0 right-0 text-center px-4 sm:px-6 md:px-8">
     >
-      <div
-        class="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-8"
-      >
-        <div class="text-center max-w-4xl">
-          <p
-          v-if="typeof message === 'string'"
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
-          >
-            {{ message }}
-          </p>
-          <div v-else-if="message.type === 'svg'" class="mb-6 sm:mb-8 md:mb-10">
-            <img
-              :src="message.src"
-              :alt="message.alt"
-              class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] mx-auto object-contain drop-shadow-2xl"
-            />
-          </div>
+      <div class="max-w-4xl mx-auto">
+        <h2
+          class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-2xl mb-2 sm:mb-3 md:mb-4"
+        >
+          Flasken vælger datoen
+        </h2>
+        <p
+          class="text-sm sm:text-base md:text-lg lg:text-xl text-white pl-5 pr-5 drop-shadow-lg"
+        >
+          Klik på flasken for at dreje og opdage en ekstra lille julegave
+        </p>
+      </div>
+      <!------------------------------------------------->
+      <!-- Fullscreen besked box med fade in animation -->
+      <!------------------------------------------------->
 
-          <button
-            @click="closeMessage"
-            class="mt-6 sm:mt-8 md:mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-lg transition-colors shadow-xl"
-          >
-            Igen
-          </button>
+      <div
+        v-if="showMessage"
+        ref="messageBox"
+        class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0 p-4"
+      >
+        <div
+          class="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-8"
+        >
+          <div class="text-center max-w-4xl">
+            <p
+              v-if="typeof message === 'string'"
+              class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
+            >
+              {{ message }}
+            </p>
+            <div
+              v-else-if="message.type === 'svg'"
+              class="mb-6 sm:mb-8 md:mb-10"
+            >
+              <img
+                :src="message.src"
+                :alt="message.alt"
+                class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] mx-auto object-contain drop-shadow-2xl"
+              />
+            </div>
+
+            <button
+              @click="closeMessage"
+              class="mt-6 sm:mt-8 md:mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-lg transition-colors shadow-xl"
+            >
+              Igen
+            </button>
+          </div>
         </div>
       </div>
     </div>
