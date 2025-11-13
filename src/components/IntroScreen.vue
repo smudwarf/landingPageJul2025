@@ -107,7 +107,7 @@ const triggerLogo = () => {
           Glædelig Jul!
         </h1>
         <p
-          class="text-white text-xl sm:text-2xl md:text-2xl lg:text-4xl xl:text-7xl py-[3rem]"
+          class="text-white text-xl sm:text-2xl md:text-2xl lg:text-4xl xl:text-7xl mb-20 sm:mb-32 md:mb-40 lg:mb-48 xl:mb-56"
         >
           Julen nærmer sig, og vi vil gerne benytte lejligheden til at sige
           tusind tak for et godt samarbejde i året, der er gået. Vi sætter stor
@@ -118,7 +118,7 @@ const triggerLogo = () => {
         <div>
           <button
             @click="moveBottleUp"
-            class="flex flex-col items-center justify-center mx-auto rounded-lg transition-colors"
+            class="flex flex-col items-center justify-center mx-auto rounded-lg transition-colors mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24"
           >
             <p class="text-white font-bold text-lg sm:text-xl md:text-2xl mb-2">
               se mere
@@ -133,7 +133,7 @@ const triggerLogo = () => {
         <div
           ref="box"
           id="spinBottle"
-          class="absolute bottom-[-460px] sm:bottom-[-920px] md:bottom-[-930px] lg:bottom-[-900px] xl:bottom-[-840px] left-1/2 -translate-x-1/2 z-10 w-80 h-80 sm:w-48 sm:h-48 md:w-100 md:h-100 lg:w-150 lg:h-150 xl:w-[40rem] xl:h-[40rem] cursor-pointer flex items-center justify-center"
+          class="absolute bottom-[-360px] sm:bottom-[-720px] md:bottom-[-730px] lg:bottom-[-700px] xl:bottom-[-640px] left-1/2 -translate-x-1/2 z-10 w-80 h-80 sm:w-48 sm:h-48 md:w-100 md:h-100 lg:w-150 lg:h-150 xl:w-[40rem] xl:h-[40rem] cursor-pointer flex items-center justify-center"
           @mouseenter="onBottleHover"
           @mouseleave="onBottleLeave"
           @click="moveBottleUp"
