@@ -10,21 +10,48 @@ const emit = defineEmits<{
 
 const introScreen = ref<HTMLElement | null>(null);
 const box = ref<HTMLElement | null>(null);
+const seeMoreButton = ref<HTMLElement | null>(null);
 const logoShouldAnimate = ref(false);
 
 onMounted(async () => {
   await nextTick();
 
-  // Fade in intro screen AFTER particles and logo (delay by 2.5 seconds)
+  // Fade in intro screen AFTER particles and logo (delay by 4.5 seconds)
   if (introScreen.value) {
     gsap.to(introScreen.value, {
       opacity: 1,
       duration: 1.0,
-      delay: 2.5, // Wait for particles and logo to finish their animation
+      delay: 4.5,
       ease: "power2.out",
     });
   }
 });
+
+// Button hover animations
+function onButtonHover() {
+  if (seeMoreButton.value) {
+    gsap.to(seeMoreButton.value, {
+      y: -5,
+      scale: 1.05,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }
+}
+
+function onButtonLeave() {
+  if (seeMoreButton.value) {
+    gsap.to(seeMoreButton.value, {
+      y: 0,
+      scale: 1,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }
+}
+//-------------------------
+// Bottle hover animations
+//-------------------------
 
 function onBottleHover() {
   if (box.value) {
@@ -48,10 +75,14 @@ function onBottleLeave() {
   }
 }
 
-// Simplified bottle click - same as moveBottleUp
+
 function moveBottleUp() {
   if (box.value) {
-    // Move bottle upwards and then start the game
+
+    //-------------------------
+    // Move bottle upwards
+    //-------------------------
+
     gsap.to(box.value, {
       bottom: "20%",
       y: "20%",
@@ -65,7 +96,11 @@ function moveBottleUp() {
 }
 
 function start() {
-  // Fade out intro screen
+
+   //-------------------- 
+  // Fade out til introscreen
+  //--------------------
+
   if (introScreen.value) {
     gsap.to(introScreen.value, {
       opacity: 0,
@@ -85,7 +120,11 @@ const triggerLogo = () => {
 
 <template>
   <div class="intro-screen relative">
+
+    <!------------------------------------------->
     <!-- FadeParticle component with particles -->
+    <!------------------------------------------->
+
     <FadeParticle @particles-ready="triggerLogo" />
 
     <!-- Main content screen -->
@@ -94,7 +133,11 @@ const triggerLogo = () => {
       class="fixed inset-0 z-20 flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gradient-to-br from-gray-700 to-gray-900 opacity-0"
     >
       <div class="text-center max-w-4xl xl:max-w-7xl mx-auto relative">
+        
+        <!--------------------------------->
         <!-- Logo positioned above title -->
+       <!--------------------------------->
+
         <div
           class="absolute inset-x-0 -top-16 sm:-top-20 md:-top-24 lg:-top-28 xl:-top-32 z-30"
         >
@@ -117,8 +160,11 @@ const triggerLogo = () => {
 
         <div>
           <button
+            ref="seeMoreButton"
             @click="moveBottleUp"
-            class="flex flex-col items-center justify-center mx-auto rounded-lg transition-colors mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24"
+            @mouseenter="onButtonHover"
+            @mouseleave="onButtonLeave"
+            class="flex flex-col items-center justify-center mx-auto rounded-lg transition-colors mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24 cursor-pointer"
           >
             <p class="text-white font-bold text-lg sm:text-xl md:text-2xl mb-2">
               se mere

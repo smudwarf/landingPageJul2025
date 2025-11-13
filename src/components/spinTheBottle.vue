@@ -86,9 +86,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center p-4">
+  <div class="min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Main game container - made bigger on XL -->
     <div
-      class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl aspect-square"
+      class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-4xl aspect-square mb-8"
     >
       <div class="absolute inset-0 w-full h-full">
         <!---------------------------->
@@ -98,13 +99,13 @@ onMounted(() => {
           v-for="i in 6"
           :key="i"
           :style="{
-            transform: `rotate(${i * 60}deg) translateY(min(-10vw, -120px))`,
+            transform: `rotate(${i * 60}deg) translateY(min(-12vw, -180px))`,
             position: 'absolute',
             left: '50%',
             top: '50%',
             transformOrigin: 'center',
           }"
-          class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 bg-gray-600 rounded-full -translate-x-1/2 -translate-y-1/2"
+          class="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 xl:w-8 xl:h-8 bg-gray-600 rounded-full -translate-x-1/2 -translate-y-1/2"
         ></div>
       </div>
 
@@ -128,7 +129,7 @@ onMounted(() => {
       <div
         ref="box"
         id="spinBottle"
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-80 h-80 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 cursor-grab active:cursor-grabbing flex items-center justify-center"
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-80 h-80 sm:w-96 sm:h-96 md:w-[28rem] md:h-[28rem] lg:w-[36rem] lg:h-[36rem] xl:w-[42rem] xl:h-[42rem] cursor-grab active:cursor-grabbing flex items-center justify-center"
       >
         <img
           src="/images/spin-bottle.png"
@@ -136,63 +137,55 @@ onMounted(() => {
           class="w-full h-full object-contain"
           @error="console.log('Bottle image failed to load')"
         />
-
       </div>
     </div>
-    
-    <!-- Bottom text - moved outside and positioned absolutely -->
-    <div
- class="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-12 left-0 right-0 text-center px-4 sm:px-6 md:px-8">
-    >
-      <div class="max-w-4xl mx-auto">
-        <h2
-          class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-2xl mb-2 sm:mb-3 md:mb-4"
-        >
-          Flasken vælger datoen
-        </h2>
-        <p
-          class="text-sm sm:text-base md:text-lg lg:text-xl text-white pl-5 pr-5 drop-shadow-lg"
-        >
-          Klik på flasken for at dreje og opdage en ekstra lille julegave
-        </p>
-      </div>
-      <!------------------------------------------------->
-      <!-- Fullscreen besked box med fade in animation -->
-      <!------------------------------------------------->
 
-      <div
-        v-if="showMessage"
-        ref="messageBox"
-        class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0 p-4"
+    <!-- Text positioned just underneath the circle -->
+    <div class="text-center px-4 sm:px-6 md:px-8 max-w-4xl">
+      <h2
+        class="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white drop-shadow-2xl mb-2 sm:mb-3 md:mb-4"
       >
-        <div
-          class="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-8"
-        >
-          <div class="text-center max-w-4xl">
-            <p
-              v-if="typeof message === 'string'"
-              class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
-            >
-              {{ message }}
-            </p>
-            <div
-              v-else-if="message.type === 'svg'"
-              class="mb-6 sm:mb-8 md:mb-10"
-            >
-              <img
-                :src="message.src"
-                :alt="message.alt"
-                class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] mx-auto object-contain drop-shadow-2xl"
-              />
-            </div>
+        Flasken vælger datoen
+      </h2>
+      <p
+        class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white drop-shadow-lg"
+      >
+        Klik på flasken for at dreje og opdage en ekstra lille julegave
+      </p>
+    </div>
 
-            <button
-              @click="closeMessage"
-              class="mt-6 sm:mt-8 md:mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-lg transition-colors shadow-xl"
-            >
-              Igen
-            </button>
+    <!------------------------------------------------->
+    <!-- Fullscreen besked box med fade in animation -->
+    <!------------------------------------------------->
+    <div
+      v-if="showMessage"
+      ref="messageBox"
+      class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0 p-4"
+    >
+      <div
+        class="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-8"
+      >
+        <div class="text-center max-w-4xl scale-50">
+          <p
+            v-if="typeof message === 'string'"
+            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
+          >
+            {{ message }}
+          </p>
+          <div v-else-if="message.type === 'svg'" class="mb-6 sm:mb-8 md:mb-10">
+            <img
+              :src="message.src"
+              :alt="message.alt"
+              class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] mx-auto object-contain drop-shadow-2xl"
+            />
           </div>
+
+          <button
+            @click="closeMessage"
+            class="mt-6 sm:mt-8 md:mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-lg transition-colors shadow-xl"
+          >
+            Igen
+          </button>
         </div>
       </div>
     </div>
