@@ -1,7 +1,7 @@
 <template>
   <div
     ref="logoContainer"
-    class="absolute inset-0 flex items-center justify-center z-30"
+    class="absolute inset-0 flex items-center justify-center"
   >
     <div class="flex flex-col items-center justify-center text-center">
       <!-- Logo positioned above the title -->
@@ -9,7 +9,7 @@
         ref="logoImg"
         src="/images/logo.svg"
         alt="Logo"
-        class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 opacity-0 mb-4 sm:mb-6 md:mb-8"
+        class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 opacity-0 mb-20 sm:mb-6 md:mb-8"
       />
     </div>
   </div>
@@ -47,14 +47,7 @@ const animateLogo = () => {
         duration: 2.0,
         ease: "power2.out",
         onComplete: () => {
-          // Add subtle floating animation after landing
-          gsap.to(logoImg.value, {
-            y: -10,
-            duration: 2.0,
-            repeat: -1,
-            yoyo: true,
-            ease: "power2.inOut",
-          });
+         
         },
       }
     );
