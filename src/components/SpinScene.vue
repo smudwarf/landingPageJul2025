@@ -25,6 +25,18 @@ function setScene() {}
 </script>
 <template>
   <main data-main class="relative h-screen">
+   <section>
+<h1>Spin the Bottle</h1>
+ <img
+          src="public/images/circle.svg"
+          alt="Circle Background"
+          class="w-full max-w-[60rem] aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 origin-center"
+          @error="console.log('Circle SVG failed to load')"
+        />
+
+
+</section> 
+
     <img
       @click="setScene"
       src="/images/spin-bottle.png"
