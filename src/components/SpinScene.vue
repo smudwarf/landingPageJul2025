@@ -25,17 +25,17 @@ function setScene() {}
 </script>
 <template>
   <main data-main class="relative h-screen">
-   <section>
-<h1>Spin the Bottle</h1>
- <img
-          src="public/images/circle.svg"
-          alt="Circle Background"
-          class="w-full max-w-[60rem] aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 origin-center"
-          @error="console.log('Circle SVG failed to load')"
-        />
+    <section>
+      <img
+        src="public/images/circle.svg"
+        alt="Circle Background"
+        class="w-full max-w-[60rem] aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 origin-center"
+        @error="console.log('Circle SVG failed to load')"
+      />
 
-
-</section> 
+      <h1 class = "absolute bottom-15 left-1/2 -translate-x-1/2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl">
+        Spin for en overraskelse</h1>
+    </section>
 
     <img
       @click="setScene"
