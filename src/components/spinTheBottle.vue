@@ -3,6 +3,7 @@ import { ref, onMounted, nextTick } from "vue";
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
+import ResultCard from "./resultCard.vue";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
@@ -29,41 +30,10 @@ const messages: Record<number, MessageContent> = {
 async function handlePoint(point: number) {
   message.value = messages[point];
   showMessage.value = true;
-
-  // Vent til DOM er opdateret
-  await nextTick();
-
-  // Animate besked box ind
-  if (messageBox.value) {
-    gsap.to(messageBox.value, {
-      opacity: 1,
-      duration: 0.3,
-      ease: "power2.out",
-    });
-
-    const innerDiv = messageBox.value.querySelector("div");
-    if (innerDiv) {
-      gsap.to(innerDiv, {
-        scale: 1,
-        duration: 0.4,
-        ease: "back.out(1.7)",
-        delay: 0.1,
-      });
-    }
-  }
 }
 
 function closeMessage() {
-  if (messageBox.value) {
-    gsap.to(messageBox.value, {
-      opacity: 0,
-      duration: 0.3,
-      ease: "power2.in",
-      onComplete: () => {
-        showMessage.value = false;
-      },
-    });
-  }
+  showMessage.value = false;
 }
 
 onMounted(() => {
@@ -87,7 +57,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center p-4">
-    <!-- Main game container - made bigger on XL -->
+   
     <div
       class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-4xl aspect-square mb-8"
     >
@@ -140,7 +110,10 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Text positioned just underneath the circle -->
+    <!------------------------------------------------>
+    <!---------------Text under spinner ------------->
+   <!------------------------------------------------>
+
     <div class="text-center px-4 sm:px-6 md:px-8 max-w-4xl">
       <h2
         class="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white drop-shadow-2xl mb-2 sm:mb-3 md:mb-4"
@@ -154,40 +127,14 @@ onMounted(() => {
       </p>
     </div>
 
-    <!------------------------------------------------->
-    <!-- Fullscreen besked box med fade in animation -->
-    <!------------------------------------------------->
-    <div
-      v-if="showMessage"
-      ref="messageBox"
-      class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md backdrop-brightness-50 opacity-0 p-4"
-    >
-      <div
-        class="w-full h-full flex items-center justify-center px-4 sm:px-6 md:px-8"
-      >
-        <div class="text-center max-w-4xl scale-50">
-          <p
-            v-if="typeof message === 'string'"
-            class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
-          >
-            {{ message }}
-          </p>
-          <div v-else-if="message.type === 'svg'" class="mb-6 sm:mb-8 md:mb-10">
-            <img
-              :src="message.src"
-              :alt="message.alt"
-              class="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] mx-auto object-contain drop-shadow-2xl"
-            />
-          </div>
+    <!----------------------------------------->
+    <!-- Result Card with slide-up animation -->
+    <!----------------------------------------->
 
-          <button
-            @click="closeMessage"
-            class="mt-6 sm:mt-8 md:mt-12 bg-white hover:bg-gray-100 text-gray-800 font-bold text-lg sm:text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12 rounded-lg transition-colors shadow-xl"
-          >
-            Igen
-          </button>
-        </div>
-      </div>
-    </div>
+    <ResultCard
+      :message="message"
+      :show="showMessage"
+      @close="closeMessage"
+    />
   </div>
 </template>

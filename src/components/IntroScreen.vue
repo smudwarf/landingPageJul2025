@@ -145,12 +145,12 @@ const triggerLogo = () => {
         </div>
 
         <h1
-          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl font-bold text-white drop-shadow-2xl mb-6 sm:mb-8 md:mb-10"
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-8 sm:mb-15 md:mb-10"
         >
           Glædelig Jul!
         </h1>
         <p
-          class="text-white text-xl sm:text-2xl md:text-2xl lg:text-4xl xl:text-7xl mb-20 sm:mb-32 md:mb-40 lg:mb-48 xl:mb-56"
+          class="text-white text-xl sm:text-xl md:text-1xl lg:text-3xl xl:text-6xl mb-20 sm:mb-32 md:mb-40 lg:mb-48 xl:mb-56"
         >
           Julen nærmer sig, og vi vil gerne benytte lejligheden til at sige
           tusind tak for et godt samarbejde i året, der er gået. Vi sætter stor

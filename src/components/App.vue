@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import IntroScreen from "../components/introScreen.vue";
+import IntroScreen from "../components/IntroScreen.vue";
 import SpinTheBottle from "../components/spinTheBottle.vue";
 
 const showIntro = ref(true);
