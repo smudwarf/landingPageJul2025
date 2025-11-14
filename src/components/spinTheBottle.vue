@@ -57,7 +57,6 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center p-4">
-   
     <div
       class="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-4xl aspect-square mb-8"
     >
@@ -112,7 +111,7 @@ onMounted(() => {
 
     <!------------------------------------------------>
     <!---------------Text under spinner ------------->
-   <!------------------------------------------------>
+    <!------------------------------------------------>
 
     <div class="text-center px-4 sm:px-6 md:px-8 max-w-4xl">
       <h2
@@ -131,10 +130,6 @@ onMounted(() => {
     <!-- Result Card with slide-up animation -->
     <!----------------------------------------->
 
-    <ResultCard
-      :message="message"
-      :show="showMessage"
-      @close="closeMessage"
-    />
+    <ResultCard :message="message" :show="showMessage" @close="closeMessage" />
   </div>
 </template>

@@ -75,10 +75,8 @@ function onBottleLeave() {
   }
 }
 
-
 function moveBottleUp() {
   if (box.value) {
-
     //-------------------------
     // Move bottle upwards
     //-------------------------
@@ -96,8 +94,7 @@ function moveBottleUp() {
 }
 
 function start() {
-
-   //-------------------- 
+  //--------------------
   // Fade out til introscreen
   //--------------------
 
@@ -120,7 +117,6 @@ const triggerLogo = () => {
 
 <template>
   <div class="intro-screen relative">
-
     <!------------------------------------------->
     <!-- FadeParticle component with particles -->
     <!------------------------------------------->
@@ -130,13 +126,19 @@ const triggerLogo = () => {
     <!-- Main content screen -->
     <div
       ref="introScreen"
-      class="fixed inset-0 z-20 flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gradient-to-br from-gray-700 to-gray-900 opacity-0"
+      class="fixed inset-0 z-20 flex items-center justify-center px-4 sm:px-6 md:px-8 opacity-0"
+      style="
+        background: linear-gradient(
+          to bottom right,
+          var(--color-green-bg),
+          #041a0a
+        );
+      "
     >
       <div class="text-center max-w-4xl xl:max-w-7xl mx-auto relative">
-        
         <!--------------------------------->
         <!-- Logo positioned above title -->
-       <!--------------------------------->
+        <!--------------------------------->
 
         <div
           class="absolute inset-x-0 -top-16 sm:-top-20 md:-top-24 lg:-top-28 xl:-top-32 z-30"
@@ -145,12 +147,12 @@ const triggerLogo = () => {
         </div>
 
         <h1
-          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-white drop-shadow-2xl mb-8 sm:mb-15 md:mb-10"
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl mb-8 sm:mb-15 md:mb-10"
         >
           Glædelig Jul!
         </h1>
         <p
-          class="text-white text-xl sm:text-xl md:text-1xl lg:text-3xl xl:text-6xl mb-20 sm:mb-32 md:mb-40 lg:mb-48 xl:mb-56"
+          class="text-xl text-green-inc sm:text-xl md:text-1xl lg:text-3xl xl:text-6xl mb-20 sm:mb-32 md:mb-40 lg:mb-48 xl:mb-56"
         >
           Julen nærmer sig, og vi vil gerne benytte lejligheden til at sige
           tusind tak for et godt samarbejde i året, der er gået. Vi sætter stor
@@ -166,7 +168,9 @@ const triggerLogo = () => {
             @mouseleave="onButtonLeave"
             class="flex flex-col items-center justify-center mx-auto rounded-lg transition-colors mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24 cursor-pointer"
           >
-            <p class="text-white font-bold text-lg sm:text-xl md:text-2xl mb-2">
+            <p
+              class="text-green-inc font-bold text-lg sm:text-xl md:text-2xl mb-2"
+            >
               se mere
             </p>
             <img
