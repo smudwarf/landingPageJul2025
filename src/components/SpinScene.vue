@@ -34,7 +34,7 @@ function setScene() {}
       />
 
       <h1
-        class="absolute bottom-15 left-1/2 -translate-x-1/2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl"
+        class="absolute bottom-15 left-1/2 -translate-x-1/2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-4xl font-bold text-green-bg drop-shadow-2xl"
       >
         Spin for en overraskelse
       </h1>

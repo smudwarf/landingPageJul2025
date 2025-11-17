@@ -173,6 +173,7 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
 <style scoped>
 .triangle {
   width: 0;

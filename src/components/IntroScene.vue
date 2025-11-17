@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { onMounted } from "vue";
 const emits = defineEmits(["complete"]);
 
+//triangle
 let tl1, tl2;
 onMounted(() => {
   tl1 = gsap.timeline({ delay: 2.5 });
@@ -68,11 +69,12 @@ function setScene() {
         data-header
         class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl mb-8 sm:mb-15 md:mb-10"
       >
-        Glædelig Jul!
+        Rigtig glædelig jul & <br />
+        godt nytår fra Dwarf!
       </h1>
       <p
         data-description
-        class="text-xl text-green-inc sm:text-xl md:text-1xl lg:text-3xl xl:text-6xl mb-20 sm:mb-32 md:mb-40 lg:mb-48 xl:mb-56"
+        class="text-xl text-[#e8e8e8] sm:text-xl md:text-1xl lg:text-3xl xl:text-6xl mb-20 sm:mb-30 md:mb-38 lg:mb-46 xl:mb-57"
       >
         Julen nærmer sig, og vi vil gerne benytte lejligheden til at sige tusind
         tak for et godt samarbejde i året, der er gået. Vi sætter stor pris på
