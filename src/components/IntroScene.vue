@@ -5,7 +5,7 @@ const emits = defineEmits(["complete"]);
 
 let tl1, tl2;
 onMounted(() => {
-  tl1 = gsap.timeline();
+  tl1 = gsap.timeline({ delay: 2.5 });
   tl1.set("[data-main]", {
     opacity: 1,
   });
@@ -31,6 +31,7 @@ onMounted(() => {
 });
 
 function setScene() {
+  window.dispatchEvent(new Event("background-change"));
   tl1.kill();
   tl2 = gsap.timeline({
     onComplete: () => {
@@ -58,8 +59,11 @@ function setScene() {
 }
 </script>
 <template>
-  <main data-main class="opacity-0 relative h-screen">
-    <section class="text-center mx-auto relative top-1/6" data-section>
+  <main
+    data-main
+    class="opacity-0 relative h-screen z-10 overflow-hidden w-screen"
+  >
+    <section class="text-center mx-auto relative top-1/6 px-10" data-section>
       <h1
         data-header
         class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl mb-8 sm:mb-15 md:mb-10"

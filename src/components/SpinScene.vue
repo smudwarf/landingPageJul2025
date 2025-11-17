@@ -24,7 +24,7 @@ onMounted(() => {
 function setScene() {}
 </script>
 <template>
-  <main data-main class="relative h-screen">
+  <main data-main class="relative h-svh w-svw overflow-hidden z-20">
     <section>
       <img
         src="public/images/circle.svg"
@@ -33,10 +33,11 @@ function setScene() {}
         @error="console.log('Circle SVG failed to load')"
       />
 
-      <h1 class = "absolute bottom-15 left-1/2 -translate-x-1/2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl">
+      <h1
+        class="absolute bottom-15 left-1/2 -translate-x-1/2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-green-inc drop-shadow-2xl"
+      >
         Spin for en overraskelse
       </h1>
-      
     </section>
 
     <img
