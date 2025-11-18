@@ -1,138 +1,183 @@
 <script setup lang="ts">
 import gsap from "gsap";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, onUnmounted } from "vue";
 
-let pie1, pie2, pie3, pie4, pie5, pie6;
-let unit = 1 / 6;
-let zeroOneClamp;
+// Create timeline properly
+// Create the timeline for pie animations
+let timeline: gsap.core.Timeline;
+
+function handleBottleDragging(event: CustomEvent) {
+  const { triangle, triangleRotation } = event.detail;
+  console.log(
+    `Handling bottle dragging on triangle ${triangle} with rotation ${triangleRotation}`
+  );
+
+  // Highlight the current triangle
+  highlightTriangle(triangle);
+}
+
+function handleBottleLanded(event: CustomEvent) {
+  const { triangle } = event.detail;
+  console.log(`Final result: Triangle ${triangle}`);
+
+  // Handle final selection
+  selectTriangle(triangle);
+}
+
+function highlightTriangle(triangleNumber: number) {
+  // Reset all triangles
+  gsap.set(`[id^="pie-"]`, { scale: 1, opacity: 0.8 });
+
+  // Highlight current triangle
+  gsap.to(`#pie-${triangleNumber}`, {
+    scale: 1.1,
+    opacity: 1,
+    duration: 0.3,
+    ease: "power2.out",
+  });
+}
+
+function selectTriangle(triangleNumber: number) {
+  // Final selection animation
+  gsap.to(`#pie-${triangleNumber}`, {
+    scale: 1.2,
+    duration: 0.5,
+    repeat: 1,
+  });
+}
 
 onMounted(() => {
-  zeroOneClamp = gsap.utils.clamp(0, 1);
-  pie1 = document.querySelector("#pie-1");
-  pie2 = document.querySelector("#pie-2");
-  pie3 = document.querySelector("#pie-3");
-  pie4 = document.querySelector("#pie-4");
-  pie5 = document.querySelector("#pie-5");
-  pie6 = document.querySelector("#pie-6");
+  // Create timeline
+  timeline = gsap.timeline({ repeat: -1 });
 
-  window.addEventListener("pie-spin", ({ detail }) => {
-    pieSpin(zeroOneClamp(detail));
+  // Whole spinner animation with breathing effect
+  timeline.to("[data-top-spinner]", {
+    scale: 1.05,
+    duration: 2,
+    ease: "power2.inOut",
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
   });
+
+  // Individual triangle animations with stagger effect
+  //gør pie 1 til at skalere mindrer 
+
+  gsap.to("#pie-1", {
+    scale: 1.03,
+    duration: 1.8,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power1.inOut",
+  });
+
+  gsap.to("#pie-2", {
+    scale: 1.03,
+    duration: 1.8,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power1.inOut",
+    delay: 0.3,
+  });
+
+  gsap.to("#pie-3", {
+    scale: 1.03,
+    duration: 1.8,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power1.inOut",
+    delay: 0.6,
+  });
+
+  gsap.to("#pie-4", {
+    scale: 1.03,
+    duration: 1.8,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power1.inOut",
+    delay: 0.9,
+  });
+
+  gsap.to("#pie-5", {
+    scale: 1.03,
+    duration: 1.8,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power1.inOut",
+    delay: 1.2,
+  });
+
+  gsap.to("#pie-6", {
+    scale: 1.03,
+    duration: 1.8,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power1.inOut",
+    delay: 1.5,
+  });
+
+  // Listen for bottle events with correct event names
+  window.addEventListener("bottle-dragging", handleBottleDragging);
+  window.addEventListener("bottle-spinning", handleBottleDragging);
+  window.addEventListener("bottle-landed", handleBottleLanded);
 });
 
-function polarToCartesian(angleInDegrees, radius) {
-  var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
-  return {
-    x: radius * Math.cos(angleInRadians),
-    y: radius * Math.sin(angleInRadians),
-  };
-}
-
-function triggerOnce() {
-  let bool = false;
-  return function (value) {
-    if (Number(value) > 0 && !bool) {
-      bool = true;
-      return true;
-    } else if (Number(value) == 0 && bool) {
-      bool = false;
-      return false;
-    }
-  };
-}
-
-const to1 = triggerOnce();
-const to2 = triggerOnce();
-const to3 = triggerOnce();
-const to4 = triggerOnce();
-const to5 = triggerOnce();
-const to6 = triggerOnce();
-
-function pieSpin(value) {
-  const t1 = zeroOneClamp(gsap.utils.mapRange(unit * 0, unit * 1, 0, 1, value));
-  const t2 = zeroOneClamp(gsap.utils.mapRange(unit * 1, unit * 2, 0, 1, value));
-  const t3 = zeroOneClamp(gsap.utils.mapRange(unit * 2, unit * 3, 0, 1, value));
-  const t4 = zeroOneClamp(gsap.utils.mapRange(unit * 3, unit * 4, 0, 1, value));
-  const t5 = zeroOneClamp(gsap.utils.mapRange(unit * 4, unit * 5, 0, 1, value));
-  const t6 = zeroOneClamp(gsap.utils.mapRange(unit * 5, unit * 6, 0, 1, value));
-  if (to1(t1)) {
-    animatePie(pie1, 0);
+onUnmounted(() => {
+  // Clean up timeline and event listeners
+  if (timeline) {
+    timeline.kill();
   }
-  if (to2(t2)) {
-    animatePie(pie2, 60);
-  }
-  if (to3(t3)) {
-    animatePie(pie3, 120);
-  }
-  if (to4(t4)) {
-    animatePie(pie4, 180);
-  }
-  if (to5(t5)) {
-    animatePie(pie5, 240);
-  }
-  if (to6(t6)) {
-    animatePie(pie6, 300);
-  }
-}
-
-function animatePie(pie, angle) {
-  const { x, y } = polarToCartesian(angle, 5);
-  gsap
-    .timeline()
-    .to(pie, {
-      x,
-      y,
-      duration: 0.1,
-      ease: "power1.out",
-    })
-    .to(pie, {
-      x: 0,
-      y: 0,
-      duration: 0.1,
-      ease: "power1.in",
-    });
-}
+  window.removeEventListener("bottle-dragging", handleBottleDragging);
+  window.removeEventListener("bottle-spinning", handleBottleDragging);
+  window.removeEventListener("bottle-landed", handleBottleLanded);
+});
 </script>
 
 <template>
-  <div class="absolute inset-0 h-screen w-screen bg-[#63FF4A]">
-    <section>
-      <div class="relative w-full max-w-[60rem] aspect-square mx-auto">
-        <!-- TOP SPINNER -->
+   <div class="relative h-screen w-screen bg-[#63FF4A]">
+    <section class="absolute inset-0 flex items-center justify-center">
+      <div class="relative w-full max-w-[60rem] aspect-square">
         <svg
-          viewBox="0 0 517 487"
+          viewBox="0 0 676 660"
           data-top-spinner
-          class="w-full h-full absolute top-1/2 left-1/2"
-          style="transform: translate(-50%, -50%); transform-origin: 50% 50%"
+          class="w-full h-full"
+          style="transform: translateY(-6px); transform-origin: 50% 50%;"
           fill="#072913"
         >
           <path
             id="pie-1"
-            d="M131 32.6228C168.017 11.2512 210.007 -4.12727e-05 252.75 1.1355e-10C295.493 4.1273e-05 337.484 11.2513 374.5 32.623L252.75 243.5L131 32.6228Z"
-            fill-opacity="0.8"
+            d="M222.794 110.173C259.89 88.9386 301.922 77.843 344.665 78.0015C387.408 78.1599 429.356 89.5668 466.293 111.075L343.762 321.5L222.794 110.173Z"
+            fill-opacity="0.5"
           />
           <path
             id="pie-2"
-            d="M383.75 31.9998C420.767 53.3715 451.506 84.1105 472.877 121.127C494.249 158.144 505.5 200.134 505.5 242.877L262 242.877L383.75 31.9998Z"
+            d="M475.545 110.487C512.482 131.995 543.107 162.848 564.341 199.944C585.576 237.039 596.671 279.071 596.513 321.814L353.014 320.911L475.545 110.487Z"
           />
           <path
             id="pie-3"
-            d="M505.5 253.605C505.506 296.348 494.26 338.34 472.894 375.359C451.527 412.379 420.792 443.122 383.778 464.499L262 253.638L505.5 253.605Z"
+            d="M596.484 329.542C596.331 372.285 584.93 414.234 563.427 451.174C541.923 488.114 511.075 518.743 473.982 539.983L352.986 328.672L596.484 329.542Z"
             fill-opacity="0.8"
           />
           <path
             id="pie-4"
-            d="M374.528 463.877C337.515 485.254 295.526 496.511 252.783 496.516C210.039 496.522 168.048 485.276 131.028 463.91L252.75 253.016L374.528 463.877Z"
+            d="M464.734 539.327C427.641 560.566 385.611 571.667 342.868 571.515C300.125 571.362 258.175 559.961 221.235 538.457L343.738 328.016L464.734 539.327Z"
+            fill-opacity="0.5"
           />
           <path
             id="pie-5"
-            d="M121.778 464.534C84.7589 443.168 54.0157 412.433 32.6391 375.419C11.2626 338.405 0.00570917 296.416 1.59732e-05 253.673L243.5 253.641L121.778 464.534Z"
-            fill-opacity="0.5"
+            d="M211.983 539.047C175.043 517.544 144.414 486.695 123.175 449.602C101.936 412.509 90.8346 370.479 90.9873 327.736L334.486 328.606L211.983 539.047Z"
+            fill-opacity="0.8"
           />
           <path
             id="pie-6"
-            d="M0 242.877C3.73673e-06 200.134 11.2512 158.144 32.6228 121.127C53.9944 84.1105 84.7333 53.3716 121.75 32L243.5 242.877L0 242.877Z"
-            fill-opacity="0.5"
+            d="M91.0161 319.94C91.1745 277.198 102.581 235.249 124.09 198.312C145.599 161.375 176.451 130.75 213.547 109.516L334.514 320.843L91.0161 319.94Z"
+            fill-opacity="0.8"
           />
         </svg>
       </div>
