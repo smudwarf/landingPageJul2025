@@ -3,9 +3,9 @@ import gsap from "gsap";
 import { onMounted } from "vue";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
-gsap.registerPlugin(Draggable, InertiaPlugin);
 
 onMounted(() => {
+  gsap.registerPlugin(Draggable, InertiaPlugin);
   Draggable.create("[data-bottle]", {
     type: "rotation",
     inertia: true,
@@ -18,20 +18,36 @@ onMounted(() => {
       const point = Math.round(normalizedRotation / 60) % 6 || 6;
       // handlePoint(point);
     },
+    // onDrag: function () {
+    //   const value = gsap.utils.mapRange(0, 360, 0, 1, this.rotation % 360);
+    //   window.dispatchEvent(
+    //     new CustomEvent("pie-spin", {
+    //       detail: value,
+    //     })
+    //   );
+    // },
+    // onThrowUpdate: function () {
+    //   const value = gsap.utils.mapRange(0, 360, 0, 1, this.rotation % 360);
+    //   window.dispatchEvent(
+    //     new CustomEvent("pie-spin", {
+    //       detail: value,
+    //     })
+    //   );
+    // },
   });
 });
 
 function setScene() {}
 </script>
 <template>
-  <main data-main class="relative h-svh w-svw overflow-hidden z-20">
+  <main data-main class="absolute inset-0 h-svh w-svw overflow-hidden z-20">
     <section>
-      <img
+      <!-- <img
         src="public/images/circle.svg"
         alt="Circle Background"
         class="w-full max-w-[60rem] aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 origin-center"
         @error="console.log('Circle SVG failed to load')"
-      />
+      /> -->
 
       <h1
         class="absolute bottom-15 left-1/2 -translate-x-1/2 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-4xl font-bold text-green-bg drop-shadow-2xl"
