@@ -2,9 +2,7 @@
 import gsap from "gsap";
 import { onMounted, onUnmounted } from "vue";
 
-// Create timeline properly
-// Create the timeline for pie animations
-let timeline: gsap.core.Timeline;
+let spinnerTween: gsap.core.Tween | undefined;
 
 function handleBottleDragging(event: CustomEvent) {
   const { triangle, triangleRotation } = event.detail;
@@ -12,7 +10,7 @@ function handleBottleDragging(event: CustomEvent) {
     `Handling bottle dragging on triangle ${triangle} with rotation ${triangleRotation}`
   );
 
-  // Highlight the current triangle
+  // Highlight the current triangle (the one flasken er på)
   highlightTriangle(triangle);
 }
 
@@ -20,39 +18,50 @@ function handleBottleLanded(event: CustomEvent) {
   const { triangle } = event.detail;
   console.log(`Final result: Triangle ${triangle}`);
 
-  // Handle final selection
+  // Final selection
   selectTriangle(triangle);
 }
 
+// Stop al eksisterende tweening på alle pies
+// Reset grund-state på alle trekanter
 function highlightTriangle(triangleNumber: number) {
-  // Reset all triangles
-  gsap.set(`[id^="pie-"]`, { scale: 1, opacity: 0.8 });
+  gsap.killTweensOf('[id^="pie-"]');
+  gsap.set('[id^="pie-"]', { scale: 1, opacity: 0.8 });
 
-  // Highlight current triangle
+  // Lav en lille, loopende puls på KUN den trekant flasken er over
   gsap.to(`#pie-${triangleNumber}`, {
-    scale: 1.1,
+    scale: 1.01,
     opacity: 1,
-    duration: 0.3,
-    ease: "power2.out",
+    duration: 0.6,
+    yoyo: true,
+    repeat: -1,
+    transformOrigin: "50% 50%",
+    ease: "power5.inOut",
   });
 }
 
 function selectTriangle(triangleNumber: number) {
-  // Final selection animation
+  // Stop den pulserende highlight-animering på alle
+  gsap.killTweensOf('[id^="pie-"]');
+
+  // Reset alle
+  gsap.set('[id^="pie-"]', { scale: 1, opacity: 0.8 });
+
+  // Final “pop”-animation på den valgte trekant
   gsap.to(`#pie-${triangleNumber}`, {
-    scale: 1.2,
-    duration: 0.5,
+    scale: 1.15,
+    duration: 0.35,
+    yoyo: true,
     repeat: 1,
+    transformOrigin: "50% 50%",
+    ease: "power2.out",
   });
 }
 
 onMounted(() => {
-  // Create timeline
-  timeline = gsap.timeline({ repeat: -1 });
-
-  // Whole spinner animation with breathing effect
-  timeline.to("[data-top-spinner]", {
-    scale: 1.05,
+  // Hele spinneren skalerer lidt
+  spinnerTween = gsap.to("[data-top-spinner]", {
+    scale: 1.03,
     duration: 2,
     ease: "power2.inOut",
     yoyo: true,
@@ -60,94 +69,49 @@ onMounted(() => {
     transformOrigin: "50% 50%",
   });
 
-  // Individual triangle animations with stagger effect
-  //gør pie 1 til at skalere mindrer 
+  // Nu styres al pie-animation via highlightTriangle/selectTriangle
+  //flasken spinner, starter "bottle-dragging" og "bottle-spinning" events, som fremhæver den aktuelle trekant.
 
-  gsap.to("#pie-1", {
-    scale: 1.03,
-    duration: 1.8,
-    yoyo: true,
-    repeat: -1,
-    transformOrigin: "50% 50%",
-    ease: "power1.inOut",
-  });
-
-  gsap.to("#pie-2", {
-    scale: 1.03,
-    duration: 1.8,
-    yoyo: true,
-    repeat: -1,
-    transformOrigin: "50% 50%",
-    ease: "power1.inOut",
-    delay: 0.3,
-  });
-
-  gsap.to("#pie-3", {
-    scale: 1.03,
-    duration: 1.8,
-    yoyo: true,
-    repeat: -1,
-    transformOrigin: "50% 50%",
-    ease: "power1.inOut",
-    delay: 0.6,
-  });
-
-  gsap.to("#pie-4", {
-    scale: 1.03,
-    duration: 1.8,
-    yoyo: true,
-    repeat: -1,
-    transformOrigin: "50% 50%",
-    ease: "power1.inOut",
-    delay: 0.9,
-  });
-
-  gsap.to("#pie-5", {
-    scale: 1.03,
-    duration: 1.8,
-    yoyo: true,
-    repeat: -1,
-    transformOrigin: "50% 50%",
-    ease: "power1.inOut",
-    delay: 1.2,
-  });
-
-  gsap.to("#pie-6", {
-    scale: 1.03,
-    duration: 1.8,
-    yoyo: true,
-    repeat: -1,
-    transformOrigin: "50% 50%",
-    ease: "power1.inOut",
-    delay: 1.5,
-  });
-
-  // Listen for bottle events with correct event names
-  window.addEventListener("bottle-dragging", handleBottleDragging);
-  window.addEventListener("bottle-spinning", handleBottleDragging);
-  window.addEventListener("bottle-landed", handleBottleLanded);
+  window.addEventListener(
+    "bottle-dragging",
+    handleBottleDragging as EventListener
+  );
+  window.addEventListener(
+    "bottle-spinning",
+    handleBottleDragging as EventListener
+  );
+  window.addEventListener("bottle-landed", handleBottleLanded as EventListener);
 });
 
 onUnmounted(() => {
-  // Clean up timeline and event listeners
-  if (timeline) {
-    timeline.kill();
-  }
-  window.removeEventListener("bottle-dragging", handleBottleDragging);
-  window.removeEventListener("bottle-spinning", handleBottleDragging);
-  window.removeEventListener("bottle-landed", handleBottleLanded);
+  // Ryd op kill kill kill - alle tweens
+  if (spinnerTween) spinnerTween.kill();
+  gsap.killTweensOf('[id^="pie-"]');
+
+  window.removeEventListener(
+    "bottle-dragging",
+    handleBottleDragging as EventListener
+  );
+  window.removeEventListener(
+    "bottle-spinning",
+    handleBottleDragging as EventListener
+  );
+  window.removeEventListener(
+    "bottle-landed",
+    handleBottleLanded as EventListener
+  );
 });
 </script>
 
 <template>
-   <div class="relative h-screen w-screen bg-[#63FF4A]">
+  <div class="relative h-screen w-screen bg-[#63FF4A]">
     <section class="absolute inset-0 flex items-center justify-center">
       <div class="relative w-full max-w-[60rem] aspect-square">
         <svg
           viewBox="0 0 676 660"
           data-top-spinner
           class="w-full h-full"
-          style="transform: translateY(-6px); transform-origin: 50% 50%;"
+          style="transform: translateY(-6px); transform-origin: 50% 50%"
           fill="#072913"
         >
           <path

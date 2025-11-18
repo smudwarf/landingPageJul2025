@@ -100,12 +100,12 @@ onMounted(() => {
 //     })
 //   );
 // },
-
+//explain this function : snaps rotation to nearest 60 degree increment
 function setScene() {}
 </script>
 <template>
  <main data-main class="absolute inset-0 h-svh w-svw overflow-hidden z-20">
-    <!-- Bottle centered within the same container size as pie -->
+    <!-- centered spin flask samme containe as pie -->
     <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
       <div class="relative w-full max-w-[60rem] aspect-square flex items-center justify-center">
         <img
